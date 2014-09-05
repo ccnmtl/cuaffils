@@ -1,8 +1,6 @@
 Simple library for generating and parsing CU affil
 strings (as returned by WIND/CAS).
 
-Doing documentation-driven development here.
-
 Generating:
 
     >>> from cuaffils import generate_wind_string
@@ -35,4 +33,24 @@ Parsing:
     ... same dict as response ...
     >>> from cuaffils import parse_course_directory_string
     >>> d = parse_course_directory_string('20083NURS6610N001')
-    >>> same dict as response ...
+    ... same dict as response ...
+
+You get the idea.
+
+API is still up for changes. Will release a 1.0 when I'm comfortable
+that it won't change much.
+
+This library aims to be the central point for handling CU affils
+strings in whatever "standard" format they need to be handled in. Sort
+of a babelfish for the different ways that they are represented
+and ingested by different systems at the university. It should be
+simple, complete, easy to use, and well tested.
+
+If you encounter another format in use at CU, let us know and
+we'll (attempt to) add support for it.
+
+If you find a course affil string in some format that differs from
+what this library produces, please file an issue. All of the parsing
+code here is the result of years of reverse engineering un-documented
+formats by our staff. We do our best, but we haven't encountered every
+edge case yet.
