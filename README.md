@@ -15,24 +15,24 @@ Generating:
 		>>> 		department_id='NURS'
 		>>> )
     >>> print(generate_wind_string(**d))
-    t2.y2014.s001.cN6610.NURS.st.course:columbia.edu
+    t3.y2014.s001.cN6610.NURS.st.course:columbia.edu
     >>> print(generate_pamacea_string(**d))
-    CUcourse_NURSN6610_001_2008_2
+    CUcourse_NURSN6610_001_2008_3
     >>> print(generate_course_directory_string(**d))
-    20082NURS6610N001
+    20083NURS6610N001
 
 Parsing:
 
     >>> from cuaffils import parse_wind_string
-    >>> d = parse_wind_string('t2.y2014.s001.cN6610.NURS.st.course:columbia.edu')
+    >>> d = parse_wind_string('t3.y2014.s001.cN6610.NURS.st.course:columbia.edu')
     >>> print(d['term'])
     fall
     >>> print(d['department_id'])
     NURS
     ... etc ..
     >>> from cuaffils import parse_pamacea_string
-    >>> d = parse_pamacea_string('CUcourse_NURSN6610_001_2008_2')
+    >>> d = parse_pamacea_string('CUcourse_NURSN6610_001_2008_3')
     ... same dict as response ...
     >>> from cuaffils import parse_course_directory_string
-    >>> d = parse_course_directory_string('20082NURS6610N001')
+    >>> d = parse_course_directory_string('20083NURS6610N001')
     >>> same dict as response ...
