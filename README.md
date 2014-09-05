@@ -7,13 +7,13 @@ Generating:
 
     >>> from cuaffils import generate_wind_string
     >>> d = dict(
-    >>>     term='fall',
-		>>> 		year=2014,
-		>>> 		section_number='001',
-		>>> 		course_prefix_letter='N',
-		>>> 		course_number=6610,
-		>>> 		department_id='NURS'
-		>>> )
+    >>>    term='fall',
+    >>>    year=2014,
+    >>>    section_number='001',
+    >>>    course_prefix_letter='N',
+    >>>    course_number=6610,
+    >>>    department_id='NURS'
+    >>> )
     >>> print(generate_wind_string(**d))
     t3.y2014.s001.cN6610.NURS.st.course:columbia.edu
     >>> print(generate_pamacea_string(**d))
