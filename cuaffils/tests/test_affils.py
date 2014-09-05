@@ -4,7 +4,9 @@ from cuaffils import (
     generate_pamacea_string,
     generate_course_directory_string,
 
-    parse_wind_string)
+    parse_wind_string,
+    parse_pamacea_string,
+)
 
 TEST_CASES = [
     dict(
@@ -66,5 +68,15 @@ class ParseWindStringTest(unittest.TestCase):
             fields = c['fields']
             s = c['wind']
             r = parse_wind_string(s)
+            for k in fields.keys():
+                self.assertEqual(r[k], fields[k])
+
+
+class ParsePamaceaStringTest(unittest.TestCase):
+    def test_basic(self):
+        for c in TEST_CASES:
+            fields = c['fields']
+            s = c['pamacea']
+            r = parse_pamacea_string(s)
             for k in fields.keys():
                 self.assertEqual(r[k], fields[k])
