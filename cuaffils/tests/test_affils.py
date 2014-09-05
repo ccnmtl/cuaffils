@@ -2,7 +2,9 @@ import unittest
 from cuaffils import (
     generate_wind_string,
     generate_pamacea_string,
-    generate_course_directory_string)
+    generate_course_directory_string,
+
+    parse_wind_string)
 
 TEST_CASES = [
     dict(
@@ -56,3 +58,13 @@ class GenerateCourseDirectoryStringTest(unittest.TestCase):
             fields = c['fields']
             s = c['course_dir']
             self.assertEqual(generate_course_directory_string(**fields), s)
+
+
+class ParseWindStringTest(unittest.TestCase):
+    def test_basic(self):
+        for c in TEST_CASES:
+            fields = c['fields']
+            s = c['wind']
+            r = parse_wind_string(s)
+            for k in fields.keys():
+                self.assertEqual(r[k], fields[k])

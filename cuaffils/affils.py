@@ -1,3 +1,4 @@
+import re
 TERMS = ['spring', 'summer', 'fall']
 
 def generate_wind_string(**kwargs):
@@ -9,8 +10,32 @@ def generate_wind_string(**kwargs):
         ".st.course:columbia.edu" % fields)
 
 
-def parse_wind_string():
-    pass
+def parse_wind_string(s):
+    pattern = re.compile(
+        r"""
+        t #starts with t (which stands for term)
+        ([1-3]) #number 1,2, or 3 in group 0 'term'.
+        .y #.y comes next for year
+        (\d{4}) #exactly four digits in group 1 'year'.
+        .s
+        (\d{3}) #exactly three digits in group 2 'section'.
+        .c
+        (\D) #exactly one letter in group 3 'prefix'.
+        (\d{4}) #exactly four digits in group 4 'course_number'.
+        .
+        (\D{4}) #exactly four letters in group 5 'department_code'.
+        #the rest of the string does not matter.
+        """, re.VERBOSE)
+
+    t = pattern.search(s).groups()
+    return dict(
+        term=TERMS[int(t[0]) - 1],
+        year=int(t[1]),
+        section_number=t[2],
+        course_prefix_letter=t[3],
+        course_number=int(t[4]),
+        department_id=t[5],
+        )
 
 
 def generate_pamacea_string(**kwargs):
