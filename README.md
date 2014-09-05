@@ -54,3 +54,7 @@ what this library produces, please file an issue. All of the parsing
 code here is the result of years of reverse engineering un-documented
 formats by our staff. We do our best, but we haven't encountered every
 edge case yet.
+
+Run the tests with:
+
+    $ python setup.py test
