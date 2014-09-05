@@ -87,5 +87,22 @@ def generate_course_directory_string(**kwargs):
         "%(section_number)s" % fields)
 
 
-def parse_course_directory_string():
-    pass
+def parse_course_directory_string(s):
+    pattern = re.compile(
+        r"""
+        (\d{4}) # exactly four digits in 'year'.
+        ([1-3]) # exactly one digit in 'term'.
+        (\D{4}) # exactly four letters in 'department_code'.
+        (\d{4}) # exactly four digits in 'course_number'.
+        (\D)    # exactly one letter in 'prefix'.
+        (\d{3}) # exactly 3 digits in 'section'.
+        """, re.VERBOSE)
+    t = pattern.search(s).groups()
+    return dict(
+        term=TERMS[int(t[1]) - 1],
+        year=int(t[0]),
+        section_number=t[5],
+        course_prefix_letter=t[4],
+        course_number=int(t[3]),
+        department_id=t[2],
+        )
