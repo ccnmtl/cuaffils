@@ -19,11 +19,11 @@ TEST_CASES = [
             term='fall',
             year=2014,
             section_number='001',
-            course_prefix_letter='N',
+            course_prefix_letter='n',
             course_number=6610,
-            department_id='NURS'
+            department_id='nurs'
             ),
-        wind='t3.y2014.s001.cN6610.NURS.st.course:columbia.edu',
+        wind='t3.y2014.s001.cn6610.nurs.st.course:columbia.edu',
         pamacea='CUcourse_NURSN6610_001_2014_3',
         course_dir='20143NURS6610N001'
     ),
@@ -33,13 +33,28 @@ TEST_CASES = [
             term='spring',
             year=2010,
             section_number='010',
-            course_prefix_letter='F',
+            course_prefix_letter='f',
             course_number=1234,
-            department_id='EENG'
+            department_id='eeng'
             ),
-        wind='t1.y2010.s010.cF1234.EENG.st.course:columbia.edu',
+        wind='t1.y2010.s010.cf1234.eeng.st.course:columbia.edu',
         pamacea='CUcourse_EENGF1234_010_2010_1',
         course_dir='20101EENG1234F010'
+    ),
+
+    # yep, sometimes there's an '&' in the department...
+    dict(
+        fields=dict(
+            term='spring',
+            year=2011,
+            section_number='001',
+            course_prefix_letter='y',
+            course_number=4199,
+            department_id='a&hh'
+            ),
+        wind='t1.y2011.s001.cy4199.a&hh.st.course:columbia.edu',
+        pamacea='CUcourse_A&HHY4199_001_2011_1',
+        course_dir='20111A&HH4199Y001'
     ),
 ]
 

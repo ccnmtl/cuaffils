@@ -56,6 +56,8 @@ def parse_wind_string(s):
 def generate_pamacea_string(**kwargs):
     fields = kwargs
     fields['term'] = TERMS.index(fields['term']) + 1
+    fields['course_prefix_letter'] = fields['course_prefix_letter'].upper()
+    fields['department_id'] = fields['department_id'].upper()
     return (
         "CUcourse_%(department_id)s"
         "%(course_prefix_letter)s"
@@ -88,9 +90,9 @@ def parse_pamacea_string(s):
         term=TERMS[int(t[5]) - 1],
         year=int(t[4]),
         section_number=t[3],
-        course_prefix_letter=t[1],
+        course_prefix_letter=t[1].lower(),
         course_number=int(t[2]),
-        department_id=t[0],
+        department_id=t[0].lower(),
         )
 
 
@@ -98,6 +100,8 @@ def parse_pamacea_string(s):
 def generate_course_directory_string(**kwargs):
     fields = kwargs
     fields['term'] = TERMS.index(fields['term']) + 1
+    fields['course_prefix_letter'] = fields['course_prefix_letter'].upper()
+    fields['department_id'] = fields['department_id'].upper()
     return (
         "%(year)04d"
         "%(term)d"
@@ -126,7 +130,7 @@ def parse_course_directory_string(s):
         term=TERMS[int(t[1]) - 1],
         year=int(t[0]),
         section_number=t[5],
-        course_prefix_letter=t[4],
+        course_prefix_letter=t[4].lower(),
         course_number=int(t[3]),
-        department_id=t[2],
+        department_id=t[2].lower(),
         )
