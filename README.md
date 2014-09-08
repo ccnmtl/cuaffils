@@ -3,6 +3,8 @@
 Simple library for generating and parsing CU affil
 strings (as returned by WIND/CAS).
 
+## Basic Example
+
 Generating:
 
     >>> from cuaffils import generate_wind_string
@@ -56,6 +58,24 @@ what this library produces, please file an issue. All of the parsing
 code here is the result of years of reverse engineering un-documented
 formats by our staff. We do our best, but we haven't encountered every
 edge case yet.
+
+## Exceptions
+
+There are exceptions that get raised if you try to parse invalid
+strings:
+
+    >>> from cuaffils import parse_wind_string
+    >>> parse_wind_string("i am not valid")
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+      File "cuaffils/affils.py", line 43, in parse_wind_string
+        raise InvalidWindString
+    cuaffils.affils.InvalidWindString
+
+There are also `InvalidPamaceaString`, and `InvalidCourseDirString`
+as expected.
+
+## Testing
 
 Run the tests with:
 

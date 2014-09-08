@@ -7,6 +7,10 @@ from cuaffils import (
     parse_wind_string,
     parse_pamacea_string,
     parse_course_directory_string,
+
+    InvalidWindString,
+    InvalidPamaceaString,
+    InvalidCourseDirString,
 )
 
 TEST_CASES = [
@@ -91,3 +95,17 @@ class ParseCourseDirectoryStringTest(unittest.TestCase):
             r = parse_course_directory_string(s)
             for k in fields.keys():
                 self.assertEqual(r[k], fields[k])
+
+
+class InvalidStringsTests(unittest.TestCase):
+    def test_wind(self):
+        s = "i am not valid as anything"
+        self.assertRaises(InvalidWindString, parse_wind_string, s)
+
+    def test_pamacea(self):
+        s = "i am not valid as anything"
+        self.assertRaises(InvalidPamaceaString, parse_pamacea_string, s)
+
+    def test_coursedir(self):
+        s = "i am not valid as anything"
+        self.assertRaises(InvalidCourseDirString, parse_course_directory_string, s)

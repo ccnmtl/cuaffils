@@ -1,6 +1,18 @@
 import re
 TERMS = ['spring', 'summer', 'fall']
 
+class InvalidWindString(Exception):
+    pass
+
+
+class InvalidPamaceaString(Exception):
+    pass
+
+
+class InvalidCourseDirString(Exception):
+    pass
+
+
 def generate_wind_string(**kwargs):
     fields = kwargs
     fields['term'] = TERMS.index(fields['term']) + 1
@@ -26,7 +38,11 @@ def parse_wind_string(s):
         (\D{4}) # exactly four letters in 'department_code'.
         """, re.VERBOSE)
 
-    t = pattern.search(s).groups()
+    r = pattern.search(s)
+    if r is None:
+        raise InvalidWindString
+    t = r.groups()
+    
     return dict(
         term=TERMS[int(t[0]) - 1],
         year=int(t[1]),
@@ -63,7 +79,11 @@ def parse_pamacea_string(s):
         ([1-3]) # number 1,2, or 3 in 'term'.
         """, re.VERBOSE)
 
-    t = pattern.search(s).groups()
+    r = pattern.search(s)
+    if r is None:
+        raise InvalidPamaceaString
+    t = r.groups()
+
     return dict(
         term=TERMS[int(t[5]) - 1],
         year=int(t[4]),
@@ -97,7 +117,11 @@ def parse_course_directory_string(s):
         (\D)    # exactly one letter in 'prefix'.
         (\d{3}) # exactly 3 digits in 'section'.
         """, re.VERBOSE)
-    t = pattern.search(s).groups()
+    r = pattern.search(s)
+    if r is None:
+        raise InvalidCourseDirString
+    t = r.groups()
+
     return dict(
         term=TERMS[int(t[1]) - 1],
         year=int(t[0]),
