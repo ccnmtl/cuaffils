@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/ccnmtl/cuaffils.svg?branch=master)](https://travis-ci.org/ccnmtl
+/cuaffils)
+
 Simple library for generating and parsing CU affil
 strings (as returned by WIND/CAS).
 
