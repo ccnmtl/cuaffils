@@ -37,7 +37,7 @@ def parse_wind_string(s):
         (\d{3}) # exactly three digits in 'section'.
         .c
         (\D)    # exactly one letter in 'prefix'.
-        ([^\.]{4}) # exactly four digits in 'course_number'.
+        ([^\.]{4}) # exactly four chars in 'course_number'.
         .
         ([^\.]{3,4}) # three or four letters in 'department_code'.
         """, re.VERBOSE)
@@ -77,7 +77,7 @@ def parse_pamacea_string(s):
         CUcourse_
         (\D{4}) # exactly four letters in 'department_code'.
         (\D)    # exactly one letter in 'prefix'.
-        ([^_]{4}) # exactly four digits in 'course_number'.
+        ([^_]{4}) # exactly four chars in 'course_number'.
         _
         (\d{3}) # exactly three digits in 'section'.
         _
@@ -123,7 +123,7 @@ def parse_course_directory_string(s):
         (\d{4}) # exactly four digits in 'year'.
         ([1-3]) # exactly one digit in 'term'.
         (\D{4}) # exactly four letters in 'department_code'.
-        (\w{4}) # exactly four digits in 'course_number'.
+        (\w{4}) # exactly four chars in 'course_number'.
         (\D)    # exactly one letter in 'prefix'.
         (\d{3}) # exactly 3 digits in 'section'.
         """, re.VERBOSE)
