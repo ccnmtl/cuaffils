@@ -21,6 +21,10 @@ def generate_wind_string(**kwargs):
         "%(course_prefix_letter)s%(course_number)04d.%(department_id)s"
         ".st.course:columbia.edu" % fields)
 
+def pad_to_four(s):
+    if len(s) == 3:
+        return s + "_"
+    return s
 
 def parse_wind_string(s):
     pattern = re.compile(
@@ -35,7 +39,7 @@ def parse_wind_string(s):
         (\D)    # exactly one letter in 'prefix'.
         (\d{4}) # exactly four digits in 'course_number'.
         .
-        (\D{4}) # exactly four letters in 'department_code'.
+        ([^\.]{3,4}) # three or four letters in 'department_code'.
         """, re.VERBOSE)
 
     r = pattern.search(s)
@@ -57,7 +61,7 @@ def generate_pamacea_string(**kwargs):
     fields = kwargs
     fields['term'] = TERMS.index(fields['term']) + 1
     fields['course_prefix_letter'] = fields['course_prefix_letter'].upper()
-    fields['department_id'] = fields['department_id'].upper()
+    fields['department_id'] = pad_to_four(fields['department_id'].upper())
     return (
         "CUcourse_%(department_id)s"
         "%(course_prefix_letter)s"
@@ -92,7 +96,7 @@ def parse_pamacea_string(s):
         section_number=t[3],
         course_prefix_letter=t[1].lower(),
         course_number=int(t[2]),
-        department_id=t[0].lower(),
+        department_id=t[0].lower().strip('_'),
         )
 
 
@@ -101,7 +105,7 @@ def generate_course_directory_string(**kwargs):
     fields = kwargs
     fields['term'] = TERMS.index(fields['term']) + 1
     fields['course_prefix_letter'] = fields['course_prefix_letter'].upper()
-    fields['department_id'] = fields['department_id'].upper()
+    fields['department_id'] = pad_to_four(fields['department_id'].upper())
     return (
         "%(year)04d"
         "%(term)d"
@@ -132,5 +136,5 @@ def parse_course_directory_string(s):
         section_number=t[5],
         course_prefix_letter=t[4].lower(),
         course_number=int(t[3]),
-        department_id=t[2].lower(),
+        department_id=t[2].lower().strip('_'),
         )

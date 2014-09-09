@@ -56,6 +56,22 @@ TEST_CASES = [
         pamacea='CUcourse_A&HHY4199_001_2011_1',
         course_dir='20111A&HH4199Y001'
     ),
+
+    # departments are sometimes only 3 characters
+    dict(
+        fields=dict(
+            term='spring',
+            year=2009,
+            section_number='001',
+            course_prefix_letter='l',
+            course_number=6116,
+            department_id='law'
+            ),
+        wind='t1.y2009.s001.cl6116.law.st.course:columbia.edu',
+        pamacea='CUcourse_LAW_L6116_001_2009_1',
+        course_dir='20091LAW_6116L001'
+    ),
+
 ]
 
 class GenerateWindStringTest(unittest.TestCase):
