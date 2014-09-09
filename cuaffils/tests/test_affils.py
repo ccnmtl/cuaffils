@@ -20,7 +20,7 @@ TEST_CASES = [
             year=2014,
             section_number='001',
             course_prefix_letter='n',
-            course_number=6610,
+            course_number='6610',
             department_id='nurs'
             ),
         wind='t3.y2014.s001.cn6610.nurs.st.course:columbia.edu',
@@ -34,7 +34,7 @@ TEST_CASES = [
             year=2010,
             section_number='010',
             course_prefix_letter='f',
-            course_number=1234,
+            course_number='1234',
             department_id='eeng'
             ),
         wind='t1.y2010.s010.cf1234.eeng.st.course:columbia.edu',
@@ -49,7 +49,7 @@ TEST_CASES = [
             year=2011,
             section_number='001',
             course_prefix_letter='y',
-            course_number=4199,
+            course_number='4199',
             department_id='a&hh'
             ),
         wind='t1.y2011.s001.cy4199.a&hh.st.course:columbia.edu',
@@ -64,12 +64,27 @@ TEST_CASES = [
             year=2009,
             section_number='001',
             course_prefix_letter='l',
-            course_number=6116,
+            course_number='6116',
             department_id='law'
             ),
         wind='t1.y2009.s001.cl6116.law.st.course:columbia.edu',
         pamacea='CUcourse_LAW_L6116_001_2009_1',
         course_dir='20091LAW_6116L001'
+    ),
+
+    # course numbers can have non-digits in them...
+    dict(
+        fields=dict(
+            term='fall',
+            year=2014,
+            section_number='008',
+            course_prefix_letter='t',
+            course_number='660a',
+            department_id='socw'
+            ),
+        wind='t3.y2014.s008.ct660a.socw.st.course:columbia.edu',
+        pamacea='CUcourse_SOCWT660A_008_2014_3',
+        course_dir='20143SOCW660AT008'
     ),
 
 ]
