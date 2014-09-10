@@ -5,8 +5,11 @@ class InvalidWindString(Exception):
     pass
 
 
-class InvalidPamaceaString(Exception):
+class InvalidLDAPString(Exception):
     pass
+
+
+InvalidPamaceaString = InvalidLDAPString
 
 
 class InvalidCourseDirString(Exception):
@@ -57,7 +60,7 @@ def parse_wind_string(s):
         )
 
 
-def generate_pamacea_string(**kwargs):
+def generate_ldap_string(**kwargs):
     fields = kwargs
     fields['term'] = TERMS.index(fields['term']) + 1
     fields['course_prefix_letter'] = fields['course_prefix_letter'].upper()
@@ -69,9 +72,10 @@ def generate_pamacea_string(**kwargs):
         "%(course_number)s_"
         "%(section_number)s_"
         "%(year)04d_%(term)d" % fields)
+generate_pamacea_string = generate_ldap_string
 
 
-def parse_pamacea_string(s):
+def parse_ldap_string(s):
     pattern = re.compile(
         r"""
         CUcourse_
@@ -88,7 +92,7 @@ def parse_pamacea_string(s):
 
     r = pattern.search(s)
     if r is None:
-        raise InvalidPamaceaString
+        raise InvalidLDAPString
     t = r.groups()
 
     return dict(
@@ -99,7 +103,7 @@ def parse_pamacea_string(s):
         course_number=t[2].lower(),
         department_id=t[0].lower().strip('_'),
         )
-
+parse_pamacea_string = parse_ldap_string
 
 
 def generate_course_directory_string(**kwargs):

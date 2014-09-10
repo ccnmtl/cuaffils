@@ -18,7 +18,7 @@ Generating:
     >>> )
     >>> print(generate_wind_string(**d))
     t3.y2014.s001.cn6610.nurs.st.course:columbia.edu
-    >>> print(generate_pamacea_string(**d))
+    >>> print(generate_ldap_string(**d))
     CUcourse_NURSN6610_001_2008_3
     >>> print(generate_course_directory_string(**d))
     20083NURS6610N001
@@ -32,8 +32,8 @@ Parsing:
     >>> print(d['department_id'])
     nurs
     ... etc ..
-    >>> from cuaffils import parse_pamacea_string
-    >>> d = parse_pamacea_string('CUcourse_NURSN6610_001_2008_3')
+    >>> from cuaffils import parse_ldap_string
+    >>> d = parse_ldap_string('CUcourse_NURSN6610_001_2008_3')
     ... same dict as response ...
     >>> from cuaffils import parse_course_directory_string
     >>> d = parse_course_directory_string('20083NURS6610N001')
@@ -72,7 +72,7 @@ strings:
         raise InvalidWindString
     cuaffils.affils.InvalidWindString
 
-There are also `InvalidPamaceaString`, and `InvalidCourseDirString`
+There are also `InvalidLDAPString`, and `InvalidCourseDirString`
 as expected.
 
 ## Testing
