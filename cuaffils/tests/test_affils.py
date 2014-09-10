@@ -21,7 +21,8 @@ TEST_CASES = [
             section_number='001',
             course_prefix_letter='n',
             course_number='6610',
-            department_id='nurs'
+            department_id='nurs',
+            member='student',
             ),
         wind='t3.y2014.s001.cn6610.nurs.st.course:columbia.edu',
         ldap='CUcourse_NURSN6610_001_2014_3',
@@ -35,7 +36,8 @@ TEST_CASES = [
             section_number='010',
             course_prefix_letter='f',
             course_number='1234',
-            department_id='eeng'
+            department_id='eeng',
+            member='student',
             ),
         wind='t1.y2010.s010.cf1234.eeng.st.course:columbia.edu',
         ldap='CUcourse_EENGF1234_010_2010_1',
@@ -50,7 +52,8 @@ TEST_CASES = [
             section_number='001',
             course_prefix_letter='y',
             course_number='4199',
-            department_id='a&hh'
+            department_id='a&hh',
+            member='student',
             ),
         wind='t1.y2011.s001.cy4199.a&hh.st.course:columbia.edu',
         ldap='CUcourse_A&HHY4199_001_2011_1',
@@ -65,7 +68,8 @@ TEST_CASES = [
             section_number='001',
             course_prefix_letter='l',
             course_number='6116',
-            department_id='law'
+            department_id='law',
+            member='student',
             ),
         wind='t1.y2009.s001.cl6116.law.st.course:columbia.edu',
         ldap='CUcourse_LAW_L6116_001_2009_1',
@@ -80,11 +84,28 @@ TEST_CASES = [
             section_number='008',
             course_prefix_letter='t',
             course_number='660a',
-            department_id='socw'
+            department_id='socw',
+            member='student',
             ),
         wind='t3.y2014.s008.ct660a.socw.st.course:columbia.edu',
         ldap='CUcourse_SOCWT660A_008_2014_3',
         course_dir='20143SOCW660AT008'
+    ),
+
+    # get faculty status
+    dict(
+        fields=dict(
+            term='fall',
+            year=2014,
+            section_number='001',
+            course_prefix_letter='n',
+            course_number='6610',
+            department_id='nurs',
+            member='faculty',
+            ),
+        wind='t3.y2014.s001.cn6610.nurs.fc.course:columbia.edu',
+        ldap='CUinstr_NURSN6610_001_2014_3',
+        course_dir='20143NURS6610N001'
     ),
 
 ]
@@ -140,6 +161,10 @@ class ParseCourseDirectoryStringTest(unittest.TestCase):
             s = c['course_dir']
             r = parse_course_directory_string(s)
             for k in fields.keys():
+                if k == 'member':
+                    # course strings don't have faculty/student status
+                    self.assertEqual(r[k], None)
+                    continue
                 self.assertEqual(r[k], fields[k])
 
 

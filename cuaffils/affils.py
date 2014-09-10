@@ -19,10 +19,11 @@ class InvalidCourseDirString(Exception):
 def generate_wind_string(**kwargs):
     fields = kwargs
     fields['term'] = TERMS.index(fields['term']) + 1
+    fields['member'] = 'fc' if fields.get('member', 'student') == 'faculty' else 'st'
     return (
         "t%(term)d.y%(year)04d.s%(section_number)s.c"
         "%(course_prefix_letter)s%(course_number)s.%(department_id)s"
-        ".st.course:columbia.edu" % fields)
+        ".%(member)s.course:columbia.edu" % fields)
 
 def pad_to_four(s):
     if len(s) == 3:
@@ -43,6 +44,8 @@ def parse_wind_string(s):
         ([^\.]{4}) # exactly four chars in 'course_number'.
         .
         ([^\.]{3,4}) # three or four letters in 'department_code'.
+        .
+        ([^\.]{2}) # 'fc' or 'st' for student/faculty
         """, re.VERBOSE)
 
     r = pattern.search(s)
@@ -57,6 +60,7 @@ def parse_wind_string(s):
         course_prefix_letter=t[3],
         course_number=t[4],
         department_id=t[5],
+        member="faculty" if t[6] == 'fc' else "student",
         )
 
 
@@ -66,8 +70,9 @@ def generate_ldap_string(**kwargs):
     fields['course_prefix_letter'] = fields['course_prefix_letter'].upper()
     fields['department_id'] = pad_to_four(fields['department_id'].upper())
     fields['course_number'] = fields['course_number'].upper()
+    fields['member'] = 'instr' if fields.get('member', 'student') == 'faculty' else 'course'
     return (
-        "CUcourse_%(department_id)s"
+        "CU%(member)s_%(department_id)s"
         "%(course_prefix_letter)s"
         "%(course_number)s_"
         "%(section_number)s_"
@@ -78,7 +83,7 @@ generate_pamacea_string = generate_ldap_string
 def parse_ldap_string(s):
     pattern = re.compile(
         r"""
-        CUcourse_
+        CU([^\_]+)_ # 'course' or 'instr'
         (\D{4}) # exactly four letters in 'department_code'.
         (\D)    # exactly one letter in 'prefix'.
         ([^_]{4}) # exactly four chars in 'course_number'.
@@ -96,12 +101,13 @@ def parse_ldap_string(s):
     t = r.groups()
 
     return dict(
-        term=TERMS[int(t[5]) - 1],
-        year=int(t[4]),
-        section_number=t[3],
-        course_prefix_letter=t[1].lower(),
-        course_number=t[2].lower(),
-        department_id=t[0].lower().strip('_'),
+        member='faculty' if t[0] == 'instr' else 'student',
+        term=TERMS[int(t[6]) - 1],
+        year=int(t[5]),
+        section_number=t[4],
+        course_prefix_letter=t[2].lower(),
+        course_number=t[3].lower(),
+        department_id=t[1].lower().strip('_'),
         )
 parse_pamacea_string = parse_ldap_string
 
@@ -143,4 +149,5 @@ def parse_course_directory_string(s):
         course_prefix_letter=t[4].lower(),
         course_number=t[3].lower(),
         department_id=t[2].lower().strip('_'),
+        member=None,
         )
