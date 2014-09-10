@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="cuaffils",
-    version="0.0.1",
+    version="1.0.0",
     author="Anders Pearson",
     author_email="anders@columbia.edu",
     url="",
